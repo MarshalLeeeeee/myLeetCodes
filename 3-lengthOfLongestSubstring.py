@@ -20,6 +20,7 @@ Explanation: The answer is "wke", with the length of 3.
 
 '''
 class Solution:
+	# O(n)
     def lengthOfLongestSubstring(self, s):
         """
         :type s: str
