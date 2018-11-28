@@ -18,8 +18,8 @@ Explanation: 342 + 465 = 807.
 #         self.val = x
 #         self.next = None
 
-# my solution
 class Solution:
+    # my solution
     def addTwoNumbers(self, l1, l2):
         """
         :type l1: ListNode
@@ -58,40 +58,39 @@ class Solution:
             currNode.next = ListNode(1)
         return ansRoot.next
 
-'''
-# better solution whoes thinking is similar to mine
-# more simplified
-def addTwoNumbers(self, l1, l2):
-        """
-        :type l1: ListNode
-        :type l2: ListNode
-        :rtype: ListNode
-        """
-        
-        
-        new_list = ListNode(0)
-        current = new_list
-        carryover = 0
-        
-        while l1 or l2:
-            l1_val = l1.val if l1 else 0
-            l2_val = l2.val if l2 else 0
+
+
+class Solution2:
+    # better solution whoes thinking is similar to mine
+    # more simplified
+    def addTwoNumbers(self, l1, l2):
+            """
+            :type l1: ListNode
+            :type l2: ListNode
+            :rtype: ListNode
+            """
+            new_list = ListNode(0)
+            current = new_list
+            carryover = 0
             
-            current_sum = l1_val + l2_val + carryover
-            
-            if current_sum < 10:
-                current.next = ListNode(current_sum)
-                carryover = 0
-            else:
-                current.next = ListNode(current_sum % 10)
-                carryover = current_sum // 10
+            while l1 or l2:
+                l1_val = l1.val if l1 else 0
+                l2_val = l2.val if l2 else 0
                 
-            l1 = l1.next if l1 else None
-            l2 = l2.next if l2 else None
-            current = current.next
-            
-        if carryover:
-            current.next = ListNode(carryover)
-            
-        return new_list.next
-'''
+                current_sum = l1_val + l2_val + carryover
+                
+                if current_sum < 10:
+                    current.next = ListNode(current_sum)
+                    carryover = 0
+                else:
+                    current.next = ListNode(current_sum % 10)
+                    carryover = current_sum // 10
+                    
+                l1 = l1.next if l1 else None
+                l2 = l2.next if l2 else None
+                current = current.next
+                
+            if carryover:
+                current.next = ListNode(carryover)
+                
+            return new_list.next
