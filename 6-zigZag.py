@@ -50,7 +50,35 @@ class Solution:
         ans += split[turningPoint]
         return ans
 
-
+class Solution2:
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if(numRows == 1):
+            return s
+        row = []
+        groupNum = 2 * numRows - 2
+        turningPoint = groupNum // 2
+        for i in range(groupNum):
+            if(i < numRows):
+                row.append(i)
+            else:
+                row.append(groupNum-i)
+        #print(row)
+        ans = []
+        for i in range(numRows):
+        	ans.append('')
+        #print(ans)
+        for i,c in enumerate(s):
+            m = i % groupNum
+            ans[row[m]]+=c
+        trueAns = ''
+        for i in range(numRows):
+            trueAns += ans[i]
+        return trueAns
 
 if __name__ == '__main__':
-	print(Solution().convert("PAYPALISHIRING"))
+	print(Solution2().convert("PAYPALISHIRING",4))
