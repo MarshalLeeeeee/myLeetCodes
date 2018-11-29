@@ -78,5 +78,38 @@ class Solution:
             ans = -(1<<31)
         return ans
 
+class Solution2:
+    def myAtoi(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        neg = 1
+        maxInt = 1<<31
+        start = 0
+        str = str.strip() # eliminate the head and tail of certain character (default is ' ')
+        if(str == ''):
+            return 0
+        if(str[0] == '+'):
+            neg = 1
+            start = 1 # if use str[1:], problems may be accur
+        if(str[0] == '-'):
+            neg = -1
+            start = 1
+        ans = 0
+        for i in range(start,len(str)):
+            if('0' <= str[i] and str[i] <= '9'):
+                ans = ans * 10 + int(str[i])
+                if ans > maxInt: # prune inside is better
+                    break
+            else:
+                break
+        ans *= neg
+        if(ans > (maxInt-1)):
+            ans = maxInt - 1
+        if(ans < -maxInt):
+            ans = -maxInt
+        return ans
+
 if __name__ == '__main__':
 	print(Solution().myAtoi('3.1415926'))
