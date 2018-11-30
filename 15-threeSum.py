@@ -87,6 +87,51 @@ class Solution:
                     continue
         return ans
         
+class Solution2:       
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        if(len(nums) < 3):
+            return []
+        
+        nums.sort()
+        track = dict()
+        distinguish = []
+        for i,n in enumerate(nums):
+            try:
+                track[n].append(i)
+            except:
+                track[n] = [i]
+                distinguish.append(n)
+        
+        ans = []
+        for n in track:
+            if n == 0 and len(track[n]) >= 3:
+                ans.append([0,0,0])
+            if n!= 0 and len(track[n]) >= 2:
+                try:
+                    track[-2*n]
+                    ans.append([n,n,-2*n])
+                except:
+                    continue
+            
+        for i in range(len(distinguish)):
+            for j in range(i+1, len(distinguish)):
+                k = -(distinguish[i]+distinguish[j])
+                if(k <= distinguish[j]):
+                    continue
+                try:
+                    track[k]
+                    ans.append([distinguish[i],distinguish[j],k])
+                except:
+                    continue
+        
+        return ans
+
+
 if __name__ == '__main__':
     #print(Solution().threeSum([-6,-6,-4,-2,0,1,3,3,5,6,6]))
-    print(Solution().threeSum([-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0]))
+    #print(Solution2().threeSum([-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0]))
+    print(Solution2().threeSum([-1,0,1,2,-1,-4]))
