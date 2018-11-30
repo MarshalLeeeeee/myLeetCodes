@@ -1,3 +1,14 @@
+'''
+11. Container With Most Water
+Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). 
+n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, 
+which together with x-axis forms a container, such that the container contains the most water.
+Note: You may not slant the container and n is at least 2.
+
+Input: [1,8,6,2,5,4,8,3,7]
+Output: 49
+'''
+
 class Solution:
     # fail when the input is squencial
     def maxArea(self, height):
@@ -37,4 +48,28 @@ class Solution:
                 minIndex = findMin(heightIndex[i+1:])
             if heightIndex[i][1] == maxIndex:
                 maxIndex = findMax(heightIndex[i+1:]) 
+        return maxV
+
+
+class Solution2:
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """        
+        heightLen = len(height)
+        if(heightLen < 2):
+            return 0
+        left = 0
+        right = heightLen-1
+        maxV = 0
+        while left < right:
+            gap = right-left
+            if(height[left]<height[right]):
+                v = height[left] * gap
+                left += 1
+            else:
+                v = height[right] * gap
+                right -= 1
+            maxV = v if v>maxV else maxV
         return maxV
