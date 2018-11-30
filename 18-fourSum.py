@@ -17,7 +17,8 @@ A solution set is:
 ]
 '''
 
-class Solution:   
+class Solution:
+    # beat 50%
     def triple(self,track,target):
         res = []
         for x in track:
