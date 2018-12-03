@@ -42,3 +42,18 @@ class Solution:
                 currCopy.next = currNext
         return res
         
+class Solution2:
+    def swapPairs(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if(not head or not head.next):
+            return head
+        curr = head
+        currNext = curr.next
+        curr.next = currNext.next
+        currNext.next = curr
+        res = currNext
+        curr.next = self.swapPairs(curr.next)
+        return res
