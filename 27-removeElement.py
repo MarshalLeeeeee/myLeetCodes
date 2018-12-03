@@ -49,3 +49,21 @@ class Solution:
             else:
                 head += 1
         return head
+
+class Solution2:
+    # since the correct part will never exceed the tail of read
+    # we can simply write answer to the front part
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        length = len(nums)
+        if length == 0:
+            return 0
+        cnt = 0
+        for x in nums:
+            if x != val:
+                nums[cnt], cnt = x, cnt+1
+        return cnt
