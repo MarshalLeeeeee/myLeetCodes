@@ -65,6 +65,25 @@ class Solution:
         head.next = self.reverseKGroup(currNext,k)
         return curr
 
+class Solution2:
+    # very strong and effecient
+    def reverseKGroup(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        dummy = ListNode(0)
+        cur = dummy
+        cur.next, l, r = head, head, head
+        while True:
+            for _ in range(k):
+                if r: r=r.next
+                else: return dummy.next
+            for _ in range(k):
+                l.next, r, l = r, l, l.next
+            cur.next, r, cur = r, l, cur.next
+
 if __name__ == '__main__':
     nodes = init([1,2,3,4,5])
     res = Solution().reverseKGroup(nodes,3)
