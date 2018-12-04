@@ -48,7 +48,6 @@ class Solution:
                     wordIndex[i]=word
                     break
         for i in wordIndex:
-            indexList = {}
             wordsCopy = words.copy()
             flag = True
             for j in range(wordNum):
