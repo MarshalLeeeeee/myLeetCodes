@@ -40,7 +40,6 @@ class Solution:
             except:
                 w[word] = 1
         words = w
-        print(words)
         wordIndex = {}
         ans = []
         for i in range(len(s)-wordLen+1):
@@ -48,7 +47,6 @@ class Solution:
                 if s[i:i+wordLen] == word:
                     wordIndex[i]=word
                     break
-        #print(wordIndex)   
         for i in wordIndex:
             indexList = {}
             wordsCopy = words.copy()
