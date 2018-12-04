@@ -21,6 +21,8 @@ For the purpose of this problem, assume that your function returns 2^31 − 1 wh
 '''
 
 class Solution:
+    # not fully eliminate multiplication
+    # but is equal to Solution2
     def divide(self, dividend, divisor):
         """
         :type dividend: int
@@ -50,6 +52,41 @@ class Solution:
         ans = negDividend * negDivisor * ans
         if (ans > intMax or ans < intMin):
             ans = intMax
+        return ans
+
+class Solution2:
+    # truly eliminate multiplication (except for -ans)
+    def divide(self, dividend, divisor):
+        """
+        :type dividend: int
+        :type divisor: int
+        :rtype: int
+        """
+        if not dividend:
+            return 0
+        neg = 1 if (dividend >= 0 and divisor > 0) or (dividend < 0 and divisor < 0) else -1
+        dividend = abs(dividend)
+        divisor = abs(divisor)
+        intMax = (1 << 31) -1
+        intMin = -(1 << 31)
+        ans = 0
+        d = divisor
+        cnt = 1
+        while(True):
+            if (dividend - d >= 0):
+                dividend -= d
+                ans += cnt
+                d += d
+                cnt += cnt
+            else:
+                if d == divisor:
+                    break
+                else:
+                    d = divisor
+                    cnt = 1
+        if neg == -1:
+            ans = -ans
+        if (ans > intMax or ans < intMin): return intMax
         return ans
 
 if __name__ == '__main__':
