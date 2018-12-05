@@ -67,7 +67,44 @@ class Solution:
             nums[c] += 1
         return self.combination(nums,target,minNum)
 
-
+class Solution2:
+    def combination(self,candidates,target):
+        #print(candidates,target)
+        if target == 0:
+            return [[]]
+        if not candidates or target < candidates[0]:
+            return []
+        ans = []
+        cnt = 0
+        curr = candidates[0]
+        for i,c in enumerate(candidates):
+            if c == curr:
+                cnt += 1
+            else:
+                for j in range(cnt):
+                    res = self.combination(candidates[i:],target-curr*(j+1))
+                    for r in res:
+                        r += [curr] * (j+1)
+                    ans += res
+                cnt = 1
+                curr = c
+        for j in range(cnt):
+            res = self.combination([],target-curr*(j+1))
+            for r in res:
+                r += [curr] * (j+1)
+            ans += res
+        return ans
+        
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        if not candidates:
+            return []
+        candidates.sort()
+        return self.combination(candidates,target)
 
 if __name__ == '__main__':
     print(Solution2().combinationSum2([1],2))
