@@ -86,6 +86,28 @@ class Solution:
             connect = self.getConnect(height,tailAcsend[::-1],headAcsend[::-1],tailTop)   
         return headWater+tailWater+connect
 
+class Solution2:
+    # O(n)
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        length = len(height)
+        if length < 3:
+            return 0
+        left, leftMax, right, rightMax, ans = 0, float('-inf'), length-1, float('-inf'), 0
+        while(left <= right):
+            if height[left] < height[right]:
+                if height[left] > leftMax: leftMax = height[left]
+                else: ans += -height[left]+leftMax
+                left += 1
+            else:
+                if height[right] > rightMax: rightMax = height[right]
+                else: ans += -height[right]+rightMax
+                right -= 1
+        return ans
+
 if __name__ == '__main__':
     maps = [5,0,3,0,4,0,2,1,1,3,0,4,0,2,0,2,0,7,0]
     maps2 = [5,4,1,2]
