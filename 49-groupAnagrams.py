@@ -42,5 +42,22 @@ class Solution:
                 ans.append([word])
         return ans
 
+class Solution2:
+    # solve using sorting
+    # much faster than solution1
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        dicts = {}
+        for word in strs:
+            wordSort = ''.join(sorted(word))
+            if wordSort in dicts:
+                dicts[wordSort].append(word)
+            else:
+                dicts[wordSort] = [word]
+        return list(dicts.values())
+
 if __name__ == '__main__':
     print(Solution().groupAnagrams(strs))
