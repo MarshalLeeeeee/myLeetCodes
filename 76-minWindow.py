@@ -65,7 +65,7 @@ class Solution:
         else: return s[record[anshead][-2]:record[anshead][-2]+ansLen]
 
 class Solution2:
-	# double pointer
+	# double pointers
     def minWindow(self, s, t):
         """
         :type s: str
