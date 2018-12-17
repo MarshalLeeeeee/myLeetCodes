@@ -70,3 +70,68 @@ class Solution:
             area = self.largestRectangleArea(heights)
             maxArea = area if area > maxArea else maxArea
         return maxArea
+
+class Solution2:
+    # using dynamic programming
+    # heights[j]: height of j-th col to the i-th row
+    # left[j]: leftmost index of height[j]
+    # right[j]: rightmost index of height[j]
+    def init(self, col):
+        res = []
+        for i in range(col):
+            res.append(0)
+        return res
+    
+    def maximalRectangle(self, matrix):
+        """
+        :type matrix: List[List[str]]
+        :rtype: int
+        """
+        if not matrix: return 0
+        row, col, maxArea = len(matrix), len(matrix[0]), 0
+        heights, left, right = self.init(col), self.init(col), self.init(col)
+        for i in range(row):
+            for j in range(col):
+                n = int(matrix[i][j])
+                if i == 0:
+                    heights[j] = n
+                else:
+                    if not n: heights[j] = 0
+                    else: heights[j] += 1
+            
+            currLeft = 0
+            for j in range(col):
+                n = int(matrix[i][j])
+                if i == 0:
+                    if not n: 
+                        left[j] = -1
+                        currLeft = j+1
+                    else: left[j] = currLeft
+                else:
+                    if not n: 
+                        left[j] = -1
+                        currLeft = j+1
+                    else: left[j] = max(currLeft,left[j])
+            
+            currRight = col-1
+            for j in range(col-1,-1,-1):
+                n = int(matrix[i][j])
+                if i == 0:
+                    if not n: 
+                        right[j] = col
+                        currRight = j-1
+                    else: right[j] = currRight
+                else:
+                    if not n: 
+                        right[j] = col
+                        currRight = j-1
+                    else: right[j] = min(currRight,right[j])
+            '''
+            print('heights:',heights)
+            print('left:',left)
+            print('right:',right)
+            print('-'*10)
+            '''
+            for j in range(col):
+                maxArea = max(maxArea, heights[j] * (right[j] - left[j] + 1))
+        return maxArea
