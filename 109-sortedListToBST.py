@@ -52,3 +52,29 @@ class Solution:
                 cnt += 1
             return root
         
+class Solution2:
+    # convert list to array
+    # then input array
+    def sortedListToBST(self, head):
+        """
+        :type head: ListNode
+        :rtype: TreeNode
+        """
+        nums,curr = [],head
+        while curr:
+            nums.append(curr.val)
+            curr = curr.next
+        return self.sortedArrayToBST(nums)
+
+
+    def sortedArrayToBST(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: TreeNode
+        """
+        if nums:
+            l = len(nums)
+            root = TreeNode(nums[l//2])
+            root.left = self.sortedArrayToBST(nums[:l//2])
+            root.right = self.sortedArrayToBST(nums[l//2+1:])
+            return root
