@@ -48,10 +48,9 @@ class Solution:
         :rtype: return nothing
         """
         if root:
-            if root.left: 
-                left, right = root.left, root.right
-                while left:
-                    left.next = right
-                    left, right = left.right, right.left
-                self.connect(root.left)
-                self.connect(root.right)
+            left, right = root.left, root.right
+            while left:
+                left.next = right
+                left, right = left.right, right.left
+            self.connect(root.left)
+            self.connect(root.right)
