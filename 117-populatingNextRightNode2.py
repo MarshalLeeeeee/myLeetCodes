@@ -41,6 +41,7 @@ class TreeLinkNode:
         self.next = None
 
 class Solution:
+	# recursion solution
     def findLeftmost(self,root):
         if root:
             if root.left: return root.left
@@ -66,3 +67,25 @@ class Solution:
                     curr = curr.next
                 curr.next = right
                 left, right = leftNext, rightNext
+
+class Solution2:
+	# iteration solution
+	# level update
+	# find nearby subtree by root.next          
+    def connect(self, root):
+        """
+        :type root: TreeLinkNode
+        :rtype: return nothing
+        """
+        while root:
+            levelHead = TreeLinkNode(0)
+            curr = levelHead
+            while root:
+                if root.left:
+                    curr.next = root.left
+                    curr = curr.next
+                if root.right:
+                    curr.next = root.right
+                    curr = curr.next
+                root = root.next
+            root = levelHead.next
