@@ -11,6 +11,8 @@ Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefor
 '''
 
 class Solution:
+    # unionSet solution
+    # O(nlogn)
     def find(self,union,x):
         if union[x][0] < 0: return x
         else: return self.find(union,union[x][0])
