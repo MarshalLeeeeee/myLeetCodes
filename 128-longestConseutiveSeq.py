@@ -51,5 +51,22 @@ class Solution:
                 except: continue
             return maxSet
 
+class Solution:   
+    # use Set in python as it is realized by Hashtable
+    # thus O(n)
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums, longest = set(nums),0
+        for n in nums:
+            if n-1 not in nums:
+                curr,  length = n, 1
+                while curr+1 in nums:
+                    curr, length = curr +1, length+1
+                longest = max(longest,length)
+        return longest
+
 if __name__ == '__main__':
     print(Solution().longestConsecutive([4,0,-4,-2,2,5,2,0,-8,-8,-8,-8,-1,7,4,5,5,-4,6,6,-3]))
