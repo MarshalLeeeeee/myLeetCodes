@@ -31,6 +31,7 @@ class ListNode(object):
         self.next = None
 
 class Solution(object):
+    # bf solution
     def detectCycle(self, head):
         """
         :type head: ListNode
@@ -42,6 +43,30 @@ class Solution(object):
             except:
                 queue.append(curr)
                 curr = curr.next
+
+class Solution(object):
+    # double pointer with different speeds
+    def detectCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        fast, slow, flag = head, head, False
+        while fast:
+            fast = fast.next.next if fast.next else None
+            slow = slow.next
+            if fast == slow: break
+        if fast:
+            # assume 
+            # prefix has 'a' nodes (which is the pos)
+            # loop has 'b' nodes
+            # the meeting point must be in the loop part
+            # a + pb + n = 2(a + qb +n), 0 <= n < b, p,q are integers
+            # n = (p-2q)b - a = b-a, thus the a-th node next to meeting point is the answer
+            fast = head
+            while fast != slow:
+                fast, slow = fast.next, slow.next
+            return fast
 
 if __name__ == '__main__':
     a = ListNode(1)
