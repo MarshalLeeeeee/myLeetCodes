@@ -42,3 +42,19 @@ class Solution:
                 if node.left: stack.append(node.left); node.left = None
         return res
         
+class Solution2:
+    # iteration without structure modified
+    # reverse order output
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if not root: return []
+        res, stack = [], [root]
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            if node.left: stack.append(node.left)
+            if node.right: stack.append(node.right)
+        return res[::-1]
