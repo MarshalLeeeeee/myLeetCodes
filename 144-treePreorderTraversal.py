@@ -37,3 +37,20 @@ class Solution:
             if node.right: stack.append(node.right)
             if node.left: stack.append(node.left)
         return res
+
+class Solution2:
+	# recursion solution
+    def solve(self,root,res):
+        if root:
+            res.append(root.val)
+            if root.left: self.solve(root.left,res)
+            if root.right: self.solve(root.right,res)
+        
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        res = []
+        self.solve(root,res)
+        return res
