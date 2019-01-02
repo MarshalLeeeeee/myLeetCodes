@@ -35,3 +35,21 @@ class Solution:
         res = nums[-k:]+nums[:-k]
         for i in range(len(nums)):
             nums[i] = res[i]
+
+class Solution2:
+    # O(1) space with recursion
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        k = k % len(nums)
+        if not k or not nums: return 
+        do = min(k,1000)
+        tail = nums[-do:]
+        for i in range(len(nums)-1,do-1,-1):
+            nums[i] = nums[i-do]
+        for i in range(do):
+            nums[i] = tail[i]
+        self.rotate(nums,k-do)
