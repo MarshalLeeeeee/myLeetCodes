@@ -53,3 +53,28 @@ class Solution2:
         for i in range(do):
             nums[i] = tail[i]
         self.rotate(nums,k-do)
+
+class Solution3:
+    # O(1) space
+    # single pass
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        k = k % len(nums)
+        if not k or not nums: return 
+        i, curr, l = 0, nums[0], len(nums)
+        for cnt in range(l):
+            if cnt * k % l == 0:
+                curr = nums[i+1]
+                nextI = (i+1+k) % l
+                val = nums[nextI]
+                nums[nextI] = curr
+                curr, i = val, nextI
+            else:
+                nextI = (i+k) % l
+                val = nums[nextI]
+                nums[nextI] = curr
+                curr, i = val, nextI
