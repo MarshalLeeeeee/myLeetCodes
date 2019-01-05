@@ -71,7 +71,57 @@ class Trie:
             curr = curr.child[x]
         return True
 
+#############################################################################################
+################################## Solution 2 ###############################################
+# optimization of solution 1
+# no need to initialize all keys
+        
+class LetterNode2:
+    def __init__(self):
+        self.child = {}
 
+class Trie2:
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.root = LetterNode()
+        
+    def insert(self, word):
+        """
+        Inserts a word into the trie.
+        :type word: str
+        :rtype: void
+        """
+        curr = self.root
+        for x in word:
+            if x not in curr.child: curr.child[x] = LetterNode()
+            curr = curr.child[x]
+        curr.child[''] = LetterNode()
+        
+    def search(self, word):
+        """
+        Returns if the word is in the trie.
+        :type word: str
+        :rtype: bool
+        """
+        curr = self.root
+        for x in word:
+            if x not in curr.child: return False
+            else: curr = curr.child[x]
+        return True if '' in curr.child else False
+
+    def startsWith(self, prefix):
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        :type prefix: str
+        :rtype: bool
+        """
+        curr = self.root
+        for x in prefix:
+            if x not in curr.child: return False
+            else: curr = curr.child[x]
+        return True
         
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()
