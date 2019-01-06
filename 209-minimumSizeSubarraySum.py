@@ -31,6 +31,32 @@ class Solution:
                     break
         return 0 if ans == float('inf') else ans
 
+class Solution2:
+    # O(nlogn) solution
+    def minSubArrayLen(self, s, nums):
+        """
+        :type s: int
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums: return 0
+        sums, ans = [nums[0]], float('inf')
+        for i in range(1,len(nums)):
+            sums.append(sums[i-1]+nums[i])
+        gap = 0
+        for si in range(len(sums)):
+            # find the minimal sum >= s
+            left, right = si, len(sums)-1
+            while left <= right:
+                mid = (left+right) // 2
+                if sums[mid] - gap > s: right = mid - 1
+                elif sums[mid] - gap < s: left = mid + 1
+                else: xi = mid; break
+            if left > right: xi = left
+            if xi != len(sums): ans = min(ans,xi-si+1)
+            gap = sums[si]
+        return 0 if ans == float('inf') else ans
+
 
 
 
