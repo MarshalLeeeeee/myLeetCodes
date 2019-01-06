@@ -57,7 +57,30 @@ class Solution2:
             gap = sums[si]
         return 0 if ans == float('inf') else ans
 
-
+class Solution3:
+    # O(n) solution, at most two pass of the input array
+    # use two pointers
+    #     1. point to the current 'n' in 'nums'
+    #     2. point the left side that berely smaller than 's'
+    # use 'sum' to mark the sum of nums between two pointers
+    # the method is that whenever 'sum' >= 's'
+    #     we delete nums[left] from 'sum' and 'left += 1'
+    #     we caculate the length of subarray whose 'sum' >= 's'
+    def minSubArrayLen(self, s, nums):
+        """
+        :type s: int
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums: return 0
+        ans,left,sum = float('inf'),0,0
+        for i in range(len(nums)):
+            sum += nums[i]
+            while sum >= s:
+                ans = min(ans,i-left+1)
+                sum -= nums[left]
+                left += 1
+        return 0 if ans == float('inf') else ans
 
 
 if __name__ == '__main__':
