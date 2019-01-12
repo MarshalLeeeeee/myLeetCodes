@@ -36,3 +36,19 @@ class Solution:
                     if dic[key][i] - dic[key][i-1] <= k: return True
         return False
 
+class Solution2:
+    # record the last position of every having appeared number
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        if not nums: return False
+        dic = {}
+        for i,n in enumerate(nums):
+            if n not in dic: dic[n] = i
+            else: 
+                if i - dic[n] <= k: return True
+                else: dic[n] = i
+        return False
