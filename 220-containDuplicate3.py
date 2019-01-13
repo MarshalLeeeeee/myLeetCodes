@@ -68,3 +68,27 @@ class Solution:
                 dic[n].index = i
         return False
         
+class Solution2:
+	# bucket dictionary
+	# always managing elements within k previous index
+    def containsNearbyAlmostDuplicate(self, nums, k, t):
+        """
+        :type nums: List[int]
+        :type k: int
+        :type t: int
+        :rtype: bool
+        """
+        if k <= 0 or t < 0: return False
+        dic = {}
+        m = min(nums)
+        nums = [x-m for x in nums] # make it all natrual number
+        for i,n in enumerate(nums):
+            bucket = n//(t+1)
+            if bucket in dic: return True
+            if bucket-1 in dic and n-dic[bucket-1]<=t: return True
+            if bucket+1 in dic and dic[bucket+1]-n<=t: return True
+            if len(dic) == k:
+                dic.pop(nums[i-k]//(t+1))
+            dic[bucket] = n
+        return False
+        
