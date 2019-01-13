@@ -67,7 +67,8 @@ class Solution:
                     curr = curr.prev
                 dic[n].index = i
         return False
-        
+       
+############################################################################## 
 class Solution2:
 	# bucket dictionary
 	# always managing elements within k previous index
@@ -92,3 +93,73 @@ class Solution2:
             dic[bucket] = n
         return False
         
+############################################################################## 
+class TreeNode:
+    def __init__(self,val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+class Solution3:
+	# BST solution
+	# check the condition every time insert a number into the tree
+	# always managing the cleraest k elements
+    def add(self, root, val, t):
+        if root:
+            curr = root
+            while(curr):
+                if curr.val > val:
+                    if curr.val - val <= t: return root,True
+                    parent,curr,flag = curr,curr.left,1
+                elif curr.val < val:
+                    if val - curr.val <= t: return root,True
+                    parent,curr,flag = curr,curr.right,0
+                else: return root,True
+            curr = TreeNode(val)
+            if flag: parent.left = curr
+            else: parent.right = curr
+            return root,False
+        else: return TreeNode(val),False
+    
+    def delete(self,root, val):
+        parent, curr = None, root
+        while curr:
+            if curr.val > val: parent,curr,flag = curr,curr.left,1
+            elif curr.val < val: parent,curr,flag = curr,curr.right,0
+            else:
+                if not curr.left and not curr.right: curr = None
+                elif curr.left and not curr.right: curr = curr.left
+                elif not curr.left and curr.right: curr = curr.right
+                else:
+                    left, right = curr.left, curr.right
+                    if left.right:
+                        p, c = left, left.right
+                        while c.right:
+                            p,c = c,c.right
+                        p.right = None
+                        c.left, c.right = left, right
+                        curr = c
+                    else:
+                        left.right = right
+                        curr = left
+                if parent:
+                    if flag: parent.left = curr
+                    else: parent.right = curr
+                    return root
+                else: return curr
+            
+    def containsNearbyAlmostDuplicate(self, nums, k, t):
+        """
+        :type nums: List[int]
+        :type k: int
+        :type t: int
+        :rtype: bool
+        """
+        if k <= 0 or t < 0 or not nums: return False
+        root, cnt = None, 0
+        for i,n in enumerate(nums):
+            root,res = self.add(root,n,t)
+            if res: return res
+            if cnt == k: root = self.delete(root,nums[i-k])
+            else: cnt += 1
+        return False
