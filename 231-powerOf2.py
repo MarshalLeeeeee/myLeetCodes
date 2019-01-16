@@ -29,5 +29,17 @@ class Solution:
         m = -n
         return m&n == n
 
-
-                
+class Solution2:
+    # naive solution
+    def isPowerOfTwo(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        s = set([1,2,4,8,16,32,64,128,256,512,1024,2048,4096])
+        if n <= 4096: return n in s
+        else:
+            while n > 4096:
+                if n % 4096: return False
+                n //= 4096
+            return n in s        
