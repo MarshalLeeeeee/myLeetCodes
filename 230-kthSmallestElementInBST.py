@@ -38,6 +38,7 @@ class TreeNode:
         self.right = None
 
 class Solution:
+    # always start from the smallest element and iterate one by one 
     def kthSmallest(self, root, k):
         """
         :type root: TreeNode
