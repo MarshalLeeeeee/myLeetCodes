@@ -47,3 +47,19 @@ class Solution:
         return res
 
 
+class Solution2:
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        res = [1]*len(nums)
+        prod = 1
+        for i in range(len(res)):
+            res[i] *= prod
+            prod *= nums[i]
+        prod = 1
+        for i in range(len(res)-1,-1,-1):
+            res[i] *= prod
+            prod *= nums[i]
+        return res
