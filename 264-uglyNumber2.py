@@ -46,7 +46,25 @@ class Solution:
             cnt += 1
         return max(q2[-1],q3[-1],q5[-1])
 
-
+class Solution2:
+    # time comp O(n) dp solution
+    # abviously we want append the minimal one not in the 'res'
+    # we always manage/update the minimal multilpy result for 2, 3, 5 respectively
+    # specifically, the update is done by simply move from the current number in 'res' to the next one
+    def nthUglyNumber(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        res = [1]
+        i2, i3, i5 = 0, 0, 0
+        for i in range(1,n):
+            m = min(res[i2]*2,res[i3]*3,res[i5]*5)
+            res.append(m)
+            if m == res[i2]*2: i2 += 1
+            if m == res[i3]*3: i3 += 1
+            if m == res[i5]*5: i5 += 1
+        return res[-1]
 
 if __name__ == '__main__':
     print(Solution().nthUglyNumber(43))
