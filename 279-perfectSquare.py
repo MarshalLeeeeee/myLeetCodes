@@ -41,6 +41,25 @@ class Solution:
         print(len(d))
         return d[n]
 
+class Solution2:
+    # calculate every number before 'n'
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """                
+        sol = {1:1,2:2,3:3}
+        sqs = [1]
+        for i in range(4,n+1):
+            if int(i ** (1/2)) ** 2 == i:
+                sol[i] = 1
+                sqs.append(i)
+            else:
+                sol[i] = float('inf')
+                for sq in sqs:
+                    sol[i] = min(sol[i],sol[sq]+sol[i-sq])
+        return sol[n]
+
 
 
 if __name__ == '__main__':
