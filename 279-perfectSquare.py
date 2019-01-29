@@ -82,7 +82,31 @@ class Solution3:
             q = nq
             depth += 1
 
-
+class Solution4: 
+    # math solution
+    # The idea is to use basic square-root check for 1, 
+    # Then, Lagrange's 4 squares theorem for 4 (which is also the maximum, since theorem states every integer can be represented by sum of 4 squares). 
+    # This only leaves case 2 and 3. 
+    # To check case 2, all we need is to iterate through to sqrt of n, and check if the difference between n and square of i is also a square. 
+    # If this fails, then we know it must be 3.
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        # determine if n itself is a square
+        if int(n ** (1/2)) ** 2 == n: return 1
+        # the first step is to keep dividing 4, because the solution of 'n' is the same with '4n' by simply doubling every base number
+        while n % 4 == 0: n /= 4
+        # Legendre's three-square theorem
+        if n % 8 == 7: return 4
+        # determine case 2
+        x = int(n ** (1/2))
+        for i in range(1,x+1):
+            m = n - i*i
+            if int(m ** (1/2)) ** 2 == m: return 2
+        # only case 3 is left
+        return 3
 
 if __name__ == '__main__':
     print(Solution().numSquares(356))
