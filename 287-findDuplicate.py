@@ -67,7 +67,26 @@ class Solution2:
             fast = nums[fast]
         return slow
 
-
+class Solution3:
+    # O(nlogn) time and O(1) space
+    # binary search for [1,n] within which one is the answer
+    # in every search, traverse all nums
+    # as long as that the number > range, the answer is within the range
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)
+        left, right = 1, length-1
+        while left < right:
+            cntLeft, cntRight, mid = 0, 0, (left+right) // 2
+            for n in nums:
+                if left <= n and n <= mid: cntLeft += 1
+                if mid < n and n <= right: cntRight += 1
+            if cntLeft > mid - left + 1: right = mid
+            elif cntRight > right - mid: left = mid + 1
+        return left
 
 if __name__ == '__main__':
     print(Solution3().findDuplicate([1,3,4,2,2]))
