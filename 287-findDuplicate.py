@@ -39,6 +39,34 @@ class Solution:
                     record[(n-1)%bucket] += 1 
             index += 1
 
+class Solution2:
+    # O(n) time and O(1) space
+    # treat the array as list, noticed that the range of numbers are within [1,n]
+    # since the linked list start from 'nums[0]' and 0 in not within the 
+    # Lemma: the linked list will contain a loop where the intersection node is the duplicate one iff. the array contains one duplicate number 
+    #    =>
+    #       Notice that the intersection of the loop cannot be the first node because 0 is not within the range of the number
+    #       Thus, the intersection number will have two different numbers as prefix which denotes two distinct index in the original array, which proves it as the duplicate number
+    #       For those single number, since they appear at certain index, they have only one prefix in the linked list
+    #    <=
+    #       Since the linked list can be continuously visited the next element, it is either infinite or has a loop
+    #       However, the number is finite which is within [1,n], there must be a loop in the linked list
+    #       The intersection node will have two different prefix node, which means the duplicate number will be certainly contained in the loop linked list
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        slow, fast = nums[0], nums[nums[0]]
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+        fast, slow = nums[0], nums[slow]
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+        return slow
+
 
 
 if __name__ == '__main__':
