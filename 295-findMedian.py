@@ -23,6 +23,10 @@ If all integer numbers from the stream are between 0 and 100, how would you opti
 If 99% of all integer numbers from the stream are between 0 and 100, how would you optimize it?
 '''
 
+########################################################################################################################
+# Solution 1
+# BST solution with 0-100 nodes initialized 
+# Every tree node manege the count of duplicated nums and the number of nodes in its subtree
 class TreeNode:
     def __init__(self,val,cnt=0):
         self.val = val
@@ -32,8 +36,6 @@ class TreeNode:
         self.right = None
 
 class MedianFinder:
-    # initialize the BST tree for [0,100]
-    # every tree node manege the cnt of duplicated nums and number of nodes in its subtree
     def __init__(self):
         """
         initialize your data structure here.
@@ -105,13 +107,89 @@ class MedianFinder:
                         q = nq
                 else: return curr.val
 
+#############################################################################################################################################
+# Solution 2
+# Double heap solution which manage the first half of the array and the second half respectively
+class maxHeap:
+    def __init__(self):
+        self.heap = []
+
+    def len(self):
+        return len(self.heap)
+
+    def pop(self):
+        if self.heap:
+            res = self.heap[0]
+            self.heap[0] = self.heap[-1]
+            self.heap.pop()
+            index = 0
+            length = self.len()
+            while index*2+1 < length:
+                if (index*2+1 < length and self.heap[index] < self.heap[index*2+1]) or (index*2+2 < length and self.heap[index] < self.heap[index*2+2]):
+                    if index*2+2 < length:
+                        if self.heap[index*2+1] > self.heap[index*2+2]:
+                            self.heap[index], self.heap[index*2+1] =  self.heap[index*2+1], self.heap[index]
+                            index = index*2+1
+                        else:
+                            self.heap[index], self.heap[index*2+2] =  self.heap[index*2+2], self.heap[index]
+                            index = index*2+2
+                    else: 
+                        self.heap[index], self.heap[index*2+1] =  self.heap[index*2+1], self.heap[index]
+                        index = index*2+1
+                else: break
+            return res
+
+
+    def push(self,num):
+        self.heap.append(num)
+        index = len(self.heap) - 1
+        while index:
+            if self.heap[(index-1) // 2] < self.heap[index]:
+                self.heap[(index-1) // 2], self.heap[index] = self.heap[index], self.heap[(index-1) // 2]
+                index = (index-1) // 2
+            else: break
+
+    def peek(self):
+        if self.heap: return self.heap[0]
+
+class MedianFinder:
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.small = maxHeap()
+        self.large = maxHeap() # every element times -1
+
+    def addNum(self, num):
+        """
+        :type num: int
+        :rtype: void
+        """
+        if self.small.len() == self.large.len():
+            if self.small.len() and num >= self.small.peek(): self.large.push(-num)
+            else: self.small.push(num); self.large.push(-self.small.pop())
+        else:
+            if self.large.len() and num <= -self.large.peek(): self.small.push(num)
+            else: self.large.push(-num); self.small.push(-self.large.pop())
+
+    def findMedian(self):
+        """
+        :rtype: float
+        """
+        if self.small.len() == self.large.len():
+            return (self.small.peek() - self.large.peek()) / 2
+        else:
+            return -self.large.peek()
 
 if __name__ == '__main__':
+    
     obj = MedianFinder()
-    obj.addNum(6)
+    obj.addNum(1)
+    obj.addNum(2)
     print(obj.findMedian())
-    obj.addNum(10)
+    obj.addNum(3)
     print(obj.findMedian())
+    
 
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()
