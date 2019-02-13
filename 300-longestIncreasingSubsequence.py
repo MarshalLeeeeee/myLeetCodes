@@ -48,7 +48,27 @@ class Solution:
                 res = max(res,ans)
             return res
 
+##########################################################################################################################
+class Solution2:
+    # O(nlogn) binary search
+    def binarySearch(self, dp, target):
+        left, right = 0, len(dp)-1
+        while left <= right:
+            mid = (left+right) // 2
+            if dp[mid] > target: right = mid - 1
+            elif dp[mid] < target: left = mid + 1
+            else: return mid
+        return left
 
+    def lengthOfLIS(self, nums: 'List[int]') -> 'int':
+        if not nums: return 0
+        else:
+            dp = []
+            for i in range(len(nums)):
+                pos = self.binarySearch(dp,nums[i])
+                if pos == len(dp): dp.append(nums[i])
+                else: dp[pos] = nums[i]
+            return len(dp)
 
 if __name__ == '__main__':
     print(Solution().lengthOfLIS([0]))
