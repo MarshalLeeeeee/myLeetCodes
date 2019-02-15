@@ -85,7 +85,7 @@ class Solution:
                         nr += '('*(nums[ci]-int(rs[ci]))+s[pos[ci]]
                     for suf in suffix:
                         res.add(suf+nr)
-                return list(res) if res else ['']
+                return list(res)
             else: return list(suffix)
 
 if __name__ == '__main__':
