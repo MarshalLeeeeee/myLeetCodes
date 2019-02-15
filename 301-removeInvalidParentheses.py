@@ -86,7 +86,7 @@ class Solution:
                     for suf in suffix:
                         res.add(suf+nr)
                 return list(res) if res else ['']
-            else: return list(suffix) if suffix else ['']
+            else: return list(suffix)
 
 if __name__ == '__main__':
     print(Solution().removeInvalidParentheses('(a)c(b))(d)'))
